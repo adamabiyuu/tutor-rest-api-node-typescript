@@ -1,0 +1,18 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "Running Pre-Commit Checks..."
+
+# Auto fix lint issues
+npm run lint:fix
+
+# Check format
+npm run check-format || { echo "❌ Prettier failed"; exit 1; }
+
+# Check lint (after fix)
+npm run check-lint || { echo "❌ ESLint failed"; exit 1; }
+
+# Type Check
+npm run check-types || { echo "❌ Type check failed"; exit 1; }
+
+echo "✅ All checks passed!"

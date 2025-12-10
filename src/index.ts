@@ -1,17 +1,16 @@
-import  express, { Application, NextFunction, Request, Response }  from "express";
+import express, { Application, NextFunction, Request, Response } from 'express'
 
-const app: Application = express();
-const port: Number = 4000;
+const app: Application = express()
+const port: Number = 4000
 
 // app.get("/", (req: Request, res: Response, next: NextFunction) => {
 //     res.send("Hello World!");
 // });
 
-app.use("/health", (req: Request, res: Response, next: NextFunction) => {
-  res.status(200).send({status: "200"});
-});
+app.use('/health', (req: Request, res: Response, next: NextFunction) => {
+  res.status(200).send({ status: '200', data: 'hello world' })
+})
 
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
-
+  console.log(`Server is running on port ${port}`)
+})
