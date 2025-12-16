@@ -1,4 +1,8 @@
-import express, { Application, NextFunction, Request, Response } from 'express'
+import express, { Application } from 'express'
+import { routes } from './routes'
+import { logger } from './utils/logger'
+import bodyParser from 'body-parser'
+import cors from 'cors'
 
 const app: Application = express()
 const port: Number = 4000
@@ -7,10 +11,21 @@ const port: Number = 4000
 //     res.send("Hello World!");
 // });
 
-app.use('/health', (req: Request, res: Response, next: NextFunction) => {
-  res.status(200).send({ status: '200', data: 'hello world' })
+// parse body request
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
+// cors access handler
+app.use(cors())
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', '*')
+  res.setHeader('Access-Control-Allow-Headers', '*')
+  next()
 })
 
+routes(app)
+
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`)
+  logger.info(`Server is running on port ${port}`)
 })
