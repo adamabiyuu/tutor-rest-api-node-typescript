@@ -12,6 +12,7 @@
     "@typescript-eslint/no-require-imports": "off",
     "@typescript-eslint/no-wrapper-object-types": "off",
     "no-var": "warn",
-    "spaced-comment": "warn"
+    "spaced-comment": "warn",
+    "array-callback-return": "off"
   }
 }
