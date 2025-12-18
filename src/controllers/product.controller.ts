@@ -1,5 +1,11 @@
 import { Request, Response } from 'express'
-import { addProductToDB, deleteProductById, getProductById, getProductFromDB, updateProductById } from '../services/product.service'
+import {
+  addProductToDB,
+  deleteProductById,
+  getProductById,
+  getProductFromDB,
+  updateProductById
+} from '../services/product.service'
 import { logger } from '../utils/logger'
 import { CreateProductValidation, updateProductValidation } from '../validations/product.validation'
 import { v4 as uuidv4 } from 'uuid'
@@ -54,7 +60,7 @@ export const updateProduct = async (req: Request, res: Response) => {
 
   try {
     const result = await updateProductById(id, value)
-    if(result){
+    if (result) {
       logger.info('Success update new Product')
       return res.status(200).send({ status: true, statusCode: 201, message: 'Update Product success' })
     } else {
@@ -62,20 +68,19 @@ export const updateProduct = async (req: Request, res: Response) => {
       return res.status(404).send({ status: true, statusCode: 404, message: 'Data Not Found' })
     }
   } catch (error) {
-    logger.error( error, 'ERR: product - update')
-    return res.status(422).send({ status: false, statusCode: 422, message: error})
+    logger.error(error, 'ERR: product - update')
+    return res.status(422).send({ status: false, statusCode: 422, message: error })
   }
 }
 
 export const deleteProduct = async (req: Request, res: Response) => {
   const {
-    params: {id}
+    params: { id }
   } = req
 
   try {
     const result = await deleteProductById(id)
-    if(result){
-
+    if (result) {
       logger.info('Success delete new Product')
       return res.status(200).send({ status: true, statusCode: 200, message: 'Delete Product success' })
     } else {

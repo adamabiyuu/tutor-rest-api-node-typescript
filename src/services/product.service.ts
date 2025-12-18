@@ -24,7 +24,6 @@ export const getProductById = async (id: String) => {
 
 export const updateProductById = async (id: String, payload: ProductType) => {
   const result = await productModel.findOneAndUpdate(
-
     {
       product_id: id
     },
@@ -38,5 +37,4 @@ export const updateProductById = async (id: String, payload: ProductType) => {
 export const deleteProductById = async (id: String) => {
   const result = await productModel.findOneAndDelete({ product_id: id })
   return result
-
 }
