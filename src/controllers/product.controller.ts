@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { addProductToDB, getProductById, getProductFromDB, updateProductById } from '../services/product.service'
+import { addProductToDB, deleteProductById, getProductById, getProductFromDB, updateProductById } from '../services/product.service'
 import { logger } from '../utils/logger'
 import { CreateProductValidation, updateProductValidation } from '../validations/product.validation'
 import { v4 as uuidv4 } from 'uuid'
@@ -53,10 +53,37 @@ export const updateProduct = async (req: Request, res: Response) => {
   }
 
   try {
-    await updateProductById(id, value)
-    logger.info('Success update new Product')
-    return res.status(200).send({ status: true, statusCode: 201, message: 'Update Product success' })
+    const result = await updateProductById(id, value)
+    if(result){
+      logger.info('Success update new Product')
+      return res.status(200).send({ status: true, statusCode: 201, message: 'Update Product success' })
+    } else {
+      logger.info('Data Not Found')
+      return res.status(404).send({ status: true, statusCode: 404, message: 'Data Not Found' })
+    }
   } catch (error) {
-    
+    logger.error( error, 'ERR: product - update')
+    return res.status(422).send({ status: false, statusCode: 422, message: error})
+  }
+}
+
+export const deleteProduct = async (req: Request, res: Response) => {
+  const {
+    params: {id}
+  } = req
+
+  try {
+    const result = await deleteProductById(id)
+    if(result){
+
+      logger.info('Success delete new Product')
+      return res.status(200).send({ status: true, statusCode: 200, message: 'Delete Product success' })
+    } else {
+      logger.info('Data Not Found')
+      return res.status(404).send({ status: true, statusCode: 404, message: 'Data Not Found' })
+    }
+  } catch (error) {
+    logger.error(error, 'ERR: product - delete')
+    return res.status(422).send({ status: false, statusCode: 422, message: error })
   }
 }
