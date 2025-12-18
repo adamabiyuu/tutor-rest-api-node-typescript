@@ -12,3 +12,13 @@ export const CreateProductValidation = (payload: ProductType) => {
 
   return schema.validate(payload)
 }
+
+export const updateProductValidation = (payload: ProductType) => {
+  const schema = Joi.object({
+    name: Joi.string().allow('', null),
+    price: Joi.number().allow('', null),
+    size: Joi.string().allow('', null)
+  })
+
+  return schema.validate(payload)
+}
