@@ -41,7 +41,7 @@ export const getProduct = async (req: Request, res: Response) => {
       return res.status(200).send({ status: true, statusCode: 404, message: 'data not found', data: [] })
     }
   } else {
-    const products = await getProductFromDB()
+    const products: any = await getProductFromDB()
     logger.info('Success get product data')
     return res.status(200).send({ status: true, statusCode: 200, data: products })
   }
