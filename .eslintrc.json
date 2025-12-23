@@ -13,6 +13,7 @@
     "@typescript-eslint/no-wrapper-object-types": "off",
     "no-var": "warn",
     "spaced-comment": "warn",
-    "array-callback-return": "off"
+    "array-callback-return": "off",
+    "@typescript-eslint/no-explicit-any": "off"
   }
 }

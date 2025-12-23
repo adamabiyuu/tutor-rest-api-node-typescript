@@ -17,6 +17,7 @@ const port: Number = 4000
 // });
 
 // parse body request
+// middleware
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
@@ -33,6 +34,7 @@ app.use(deserializeToken)
 
 routes(app)
 
-app.listen(port, () => {
-  logger.info(`Server is running on port ${port}`)
-})
+// app.listen(port, () => {
+//   logger.info(`Server is running on port ${port}`)
+// })
+export default app
