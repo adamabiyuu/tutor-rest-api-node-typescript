@@ -6,6 +6,12 @@ export const ProductRouter: Router = Router()
 
 ProductRouter.get('/', getProduct)
 ProductRouter.get('/:id', getProduct)
-ProductRouter.post('/', requireAdmin, createProduct)
-ProductRouter.put('/:id', requireAdmin, updateProduct)
-ProductRouter.delete('/:id', requireAdmin, deleteProduct)
+ProductRouter.post(
+  '/',
+  requireUser, // ⬅️ WAJIB dulu (verify JWT + expired)
+  requireAdmin, // ⬅️ baru cek role
+  createProduct
+)
+// ProductRouter.post('/', requireUser,requireAdmin, createProduct)
+ProductRouter.put('/:id', requireUser, requireAdmin, updateProduct)
+ProductRouter.delete('/:id', requireUser, requireAdmin, deleteProduct)
