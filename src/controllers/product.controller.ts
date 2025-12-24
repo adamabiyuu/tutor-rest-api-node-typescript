@@ -28,24 +28,50 @@ export const createProduct = async (req: Request, res: Response) => {
 }
 
 export const getProduct = async (req: Request, res: Response) => {
-  const {
-    params: { id }
-  } = req
+  try {
+    const {
+      params: { id }
+    } = req
 
-  if (id) {
-    const product = await getProductById(id)
-    if (product) {
-      logger.info('Success get product data')
-      return res.status(200).send({ status: true, statusCode: 200, data: product })
+    if (id) {
+      const product = await getProductById(id)
+
+      if (product) {
+        logger.info('Success get product data')
+        return res.status(200).send({ status: true, statusCode: 200, data: product })
+      } else {
+        return res.status(404).send({ status: true, statusCode: 404, message: 'data not found', data: [] })
+      }
     } else {
-      return res.status(200).send({ status: true, statusCode: 404, message: 'data not found', data: [] })
+      const products = await getProductFromDB()
+      logger.info('Success get product data')
+      return res.status(200).send({ status: true, statusCode: 200, data: products })
     }
-  } else {
-    const products: any = await getProductFromDB()
-    logger.info('Success get product data')
-    return res.status(200).send({ status: true, statusCode: 200, data: products })
+  } catch (error) {
+    logger.error(error, 'ERR: product - get')
+    return res.status(500).send({ status: false, statusCode: 500, message: 'Internal server error' })
   }
 }
+
+// export const getProduct = async (req: Request, res: Response) => {
+//   const {
+//     params: { id }
+//   } = req
+
+//   if (id) {
+//     const product = await getProductById(id)
+//     if (product) {
+//       logger.info('Success get product data')
+//       return res.status(200).send({ status: true, statusCode: 200, data: product })
+//     } else {
+//       return res.status(200).send({ status: true, statusCode: 404, message: 'data not found', data: [] })
+//     }
+//   } else {
+//     const products: any = await getProductFromDB()
+//     logger.info('Success get product data')
+//     return res.status(200).send({ status: true, statusCode: 200, data: products })
+//   }
+// }
 
 export const updateProduct = async (req: Request, res: Response) => {
   const {
