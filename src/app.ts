@@ -3,6 +3,7 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import deserializeToken from './middleware/deserializedToken'
 import connectDB from './utils/connectDB'
+import { routes } from './routes'
 
 const app = express()
 
@@ -20,6 +21,8 @@ app.use((req, res, next) => {
 })
 
 app.use(deserializeToken)
+
+routes(app)
 
 app.get('/health', (req, res) => {
   res.json({ status: 'OK' })
