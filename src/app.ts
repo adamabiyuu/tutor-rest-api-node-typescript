@@ -1,6 +1,9 @@
 import express from 'express'
+import connectDB from './utils/connectDB'
 
 const app = express()
+
+connectDB()
 
 app.get('/health', (req, res) => {
   res.json({ status: 'OK' })
