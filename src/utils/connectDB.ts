@@ -1,23 +1,17 @@
 import mongoose from 'mongoose'
 import config from '../config/environment'
-import { logger } from './logger'
 
-const connectDB = async () => {
-  if (!config.db) {
-    logger.error('❌ DB environment variable is missing')
-    return
-  }
+let isConnected = false
 
-  try {
-    await mongoose.connect(config.db)
-    logger.info('Connected to MongoDB')
-  } catch (error) {
-    logger.error('Could not connect to DB')
-    logger.error(error)
-  }
+export const connectDB = async () => {
+  if (isConnected) return
+
+  if (!config.db) throw new Error('DB env is missing')
+
+  await mongoose.connect(config.db)
+  isConnected = true
+  console.log('MongoDB connected')
 }
-
-export default connectDB
 
 // import mongoose, { mongo } from 'mongoose'
 // import config from '../config/environment'
