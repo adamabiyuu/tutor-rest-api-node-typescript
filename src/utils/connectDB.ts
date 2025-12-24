@@ -6,11 +6,18 @@ let isConnected = false
 export const connectDB = async () => {
   if (isConnected) return
 
-  if (!config.db) throw new Error('DB env is missing')
+  if (!config.db) {
+    console.error('❌ DB env is missing')
+    return
+  }
 
-  await mongoose.connect(config.db)
-  isConnected = true
-  console.log('MongoDB connected')
+  try {
+    await mongoose.connect(config.db)
+    isConnected = true
+    console.log('✅ MongoDB connected')
+  } catch (err) {
+    console.error('❌ MongoDB connection failed:', err)
+  }
 }
 
 // import mongoose, { mongo } from 'mongoose'

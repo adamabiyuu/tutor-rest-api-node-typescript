@@ -18,9 +18,9 @@ app.use((req, res, next) => {
   next()
 })
 
-// ✅ SAFE for serverless
+// ✅ INI SATU-SATUNYA CARA YANG BENAR DI VERCEL
 connectDB().catch((err) => {
-  console.error('MongoDB connection error:', err)
+  console.error('MongoDB error:', err)
 })
 
 app.use(deserializeToken)
